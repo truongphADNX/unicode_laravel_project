@@ -30,7 +30,7 @@ class UserController extends Controller{
         $users = $this->userRepository->getAllUsers();
         return DataTables::of($users)
                 ->addColumn('update', function($user){
-                    return '<a href="#" class="btn btn-warning">Update</a>';
+                    return '<a href='.route('admin.users.edit',$user->id).' class="btn btn-warning">Update</a>';
                 })
                 ->addColumn('delete', function($user){
                     return '<a href="#" class="btn btn-danger">Delete</a>';
@@ -61,5 +61,22 @@ class UserController extends Controller{
                 ]
             );
         return  redirect()->route('admin.users.index')->with('msg', __('user::messages.success'));
+    }
+
+    public function edit($id){
+
+        $user = $this->userRepository->find($id);
+
+        $pageTitle = 'Cập nhật nguoi dung';
+
+        if (!$user) {
+            abort(404);
+        }
+
+        return view('user::edit',compact(['user','pageTitle']));
+    }
+
+    public function update($id){
+
     }
 }

@@ -23,6 +23,8 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        dd($this->route()->user);
+        $id = $this->route();
         return [
             'fullName' => 'required|max:255',
             'userName' => 'required|max:50|unique:users,username',

@@ -9,5 +9,7 @@ Route::prefix('admin')->name('admin.')->middleware('web')
         Route::get('/data', 'UserController@data')->name('data');
         Route::get('/create','UserController@create')->name('create');
         Route::post('/create','UserController@store')->name('store');
+        Route::get('/edit/{user}','UserController@edit')->name('edit');
+        Route::post('/edit/{user}','UserController@update')->name('update');
     });
 });

@@ -20,10 +20,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function getAllUsers(){
         return $this->model->select([
-        'name',
-        'email',
-        'group_id',
-        'created_at'
+            'id',
+            'name',
+            'email',
+            'group_id',
+            'created_at'
         ])->get();
     }
 
