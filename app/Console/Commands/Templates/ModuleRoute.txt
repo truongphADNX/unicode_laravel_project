@@ -1,0 +1,7 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Route::group(['namespace' => 'Modules\{module}\src\Http\Controllers','name'=>'{lowername}.','prefix'=>'{lowername}'], function () {
+    Route::get('/','{module}Controller@index');
+});
