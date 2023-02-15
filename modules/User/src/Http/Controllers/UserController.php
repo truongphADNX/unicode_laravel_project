@@ -30,10 +30,10 @@ class UserController extends Controller{
         $users = $this->userRepository->getAllUsers();
         return DataTables::of($users)
                 ->addColumn('update', function($user){
-                    return '<a href='.route('admin.users.edit',$user->id).' class="btn btn-warning">Update</a>';
+                    return '<a href="'.route('admin.users.edit',$user).'" class="btn btn-warning">Update</a>';
                 })
                 ->addColumn('delete', function($user){
-                    return '<a href="#" class="btn btn-danger">Delete</a>';
+                    return '<a href="'.route('admin.users.delete',$user).'" class="btn btn-danger">Delete</a>';
                 })
                 ->editColumn('created_at', function($user){
                     return Carbon::parse($user->created_at)->format('Y/m/d h:i:s');
@@ -67,7 +67,7 @@ class UserController extends Controller{
 
         $user = $this->userRepository->find($id);
 
-        $pageTitle = 'Cập nhật nguoi dung';
+        $pageTitle = 'Cập nhật người dùng';
 
         if (!$user) {
             abort(404);
@@ -77,6 +77,10 @@ class UserController extends Controller{
     }
 
     public function update($id){
+
+    }
+
+    public function delete($id){
 
     }
 }

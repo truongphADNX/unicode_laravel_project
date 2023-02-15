@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 @section('content')
-    <form action="{{ route('admin.users.update') }}" method="post">
+    <form action="{{ route('admin.users.update',$user) }}" method="post">
         @csrf
         <div class="row">
             <div class="col-6">
@@ -8,6 +8,17 @@
                     <label for="fullName">Name</label>
                     <input class="form-control @error('fullName') is-invalid @enderror" type="text" value="{{ old('fullName') ?? $user->name }}" placeholder="Input full name ..." name="fullName">
                     @error('fullName')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="username">User name</label>
+                    <input class="form-control @error('username') is-invalid @enderror" type="text" value="{{ old('username') ?? $user->username }}" placeholder="Input full name ..." name="username">
+                    @error('username')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
