@@ -33,7 +33,7 @@ class UserController extends Controller{
                     return '<a href="'.route('admin.users.edit',$user).'" class="btn btn-warning">Update</a>';
                 })
                 ->addColumn('delete', function($user){
-                    return '<a href="'.route('admin.users.delete',$user).'" class="btn btn-danger">Delete</a>';
+                    return '<a href="'.route('admin.users.delete',$user).'" class="btn btn-danger delete-action">Delete</a>';
                 })
                 ->editColumn('created_at', function($user){
                     return Carbon::parse($user->created_at)->format('Y/m/d h:i:s');
@@ -86,6 +86,8 @@ class UserController extends Controller{
         return back()->with('msg', __('user::messages.update.success'));
     }
     public function delete($id){
+        $this->userRepository->delete($id);
 
+        return back()->with('msg', __('user::messages.delete.success'));
     }
 }

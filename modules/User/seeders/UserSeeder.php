@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'email' => $faker->unique()->email,
             'password' => Hash::make('123456'),
             'group_id' => $faker->numberBetween(1,4)
-        ]);
+            ]);
         }
     }
 }

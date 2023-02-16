@@ -10,7 +10,7 @@ Route::prefix('admin')->name('admin.')->middleware('web')
         Route::get('/create','UserController@create')->name('create');
         Route::post('/create','UserController@store')->name('store');
         Route::get('/edit/{user}','UserController@edit')->name('edit');
-        Route::post('/update/{user}','UserController@update')->name('update');
+        Route::put('/update/{user}','UserController@update')->name('update');
         Route::delete('/delete/{user}','UserController@delete')->name('delete');
     });
 });

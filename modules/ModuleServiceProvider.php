@@ -70,7 +70,7 @@ class ModuleServiceProvider extends ServiceProvider
          //dang ky repository
         $this->app->singleton(
             Modules\User\src\Repositories\UserRepository::class,
-            Modules\User\src\Repositories\ProductRepository::class,
+            Modules\Categories\src\Repositories\CategoriesRepository::class,
         );
     }
 

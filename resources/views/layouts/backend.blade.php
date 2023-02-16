@@ -29,6 +29,7 @@
         <script src="{{ asset('backend/js/jquery.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="{{ asset('backend/js/scripts.js') }}"></script>
         @yield('scripts')
     </body>

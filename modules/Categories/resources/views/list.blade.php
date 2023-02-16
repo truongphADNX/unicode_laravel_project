@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 @section('content')
-<p><a href="{{ route('admin.users.create') }}" class="btn btn-primary">Create</a></p>
+<p><a href="{{ route('admin.categories.create') }}" class="btn btn-primary">Create</a></p>
 <table id="datatable" class="table table-bordered">
     @if (session('msg'))
         <div class="alert alert-success">{{ session('msg') }}</div>
@@ -8,8 +8,7 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Email</th>
-            <th>Group</th>
+            <th>Link</th>
             <th>Time</th>
             <th>Update</th>
             <th>Delete</th>
@@ -39,11 +38,10 @@
             lengthMenu: [ 10, 25, 50, 75, 100 ],
             processing: true,
             serverSide: true,
-            ajax: '{{ route('admin.users.data') }}',
+            ajax: '{{ route('admin.categories.data') }}',
             columns: [
                 { data: 'name' },
-                { data: 'email' },
-                { data: 'group_id' },
+                { data: 'slug' },
                 { data: 'created_at' },
                 { data: 'update' },
                 { data: 'delete' },
