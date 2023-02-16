@@ -1,6 +1,8 @@
 <?php
 
 return [
-    'success' => "Create User Successfully",
-    'failure' => "Create User Failed",
+    'create.success' => "Create User Successfully",
+    'create.failure' => "Create User Failed",
+    'update.success' => "Update User Successfully",
+    'update.failure' => "Update User Failed"
 ];

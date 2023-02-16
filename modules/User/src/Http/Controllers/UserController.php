@@ -60,7 +60,7 @@ class UserController extends Controller{
                     'group_id' => $userRequest->group_id,
                 ]
             );
-        return  redirect()->route('admin.users.index')->with('msg', __('user::messages.success'));
+        return  redirect()->route('admin.users.index')->with('msg', __('user::messages.create.success'));
     }
 
     public function edit($id){
@@ -76,10 +76,15 @@ class UserController extends Controller{
         return view('user::edit',compact(['user','pageTitle']));
     }
 
-    public function update($id){
+    public function update(UserRequest $userRequest, $id){
+        $data = $userRequest->except('_token', 'password');
+        if($userRequest->password){
+            $data['password'] = bcrypt($userRequest->password);
+        }
+        $this->userRepository->update($id,$data);
 
+        return back()->with('msg', __('user::messages.update.success'));
     }
-
     public function delete($id){
 
     }

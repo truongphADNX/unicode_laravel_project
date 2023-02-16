@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-6">
                 <div class="mb-3">
-                    <label for="fullName">Name</label>
-                    <input class="form-control @error('fullName') is-invalid @enderror" type="text" value="{{ old('fullName') }}" placeholder="Input full name ..." name="fullName">
-                    @error('fullName')
+                    <label for="name">Name</label>
+                    <input class="form-control @error('name') is-invalid @enderror" type="text" value="{{ old('name') }}" placeholder="Input full name ..." name="name">
+                    @error('name')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
@@ -16,9 +16,9 @@
             </div>
             <div class="col-6">
                 <div class="mb-3">
-                    <label for="userName">User name</label>
-                    <input class="form-control @error('userName') is-invalid @enderror" value="{{ old('userName') }}" type="text" placeholder="Input user name ..." name="userName">
-                    @error('userName')
+                    <label for="username">User name</label>
+                    <input class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" type="text" placeholder="Input user name ..." name="username">
+                    @error('username')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>

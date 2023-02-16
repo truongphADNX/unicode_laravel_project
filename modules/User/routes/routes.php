@@ -11,6 +11,7 @@ Route::prefix('admin')->name('admin.')->middleware('web')
         Route::post('/create','UserController@store')->name('store');
         Route::get('/edit/{user}','UserController@edit')->name('edit');
         Route::post('/update/{user}','UserController@update')->name('update');
-        Route::post('/delete/{user}','UserController@delete')->name('delete');
+        Route::delete('/delete/{user}','UserController@delete')->name('delete');
     });
 });
+
