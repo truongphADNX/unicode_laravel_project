@@ -42,7 +42,7 @@ class CategoriesController extends Controller{
 
     public function create(){
         $pageTitle = "Create categories";
-        return view('categories::add', compact('pageTitle'));
+        return view('categories::add', compact('pageTitle', ));
     }
 
     public function store(CategoriesRequest $categoriesRequest){
@@ -52,11 +52,13 @@ class CategoriesController extends Controller{
         return  redirect()->route('admin.categories.index')->with('msg', __('categories::messages.create.success'));
     }
 
-    public function edit(){
-
+    public function edit($id){
+        $pageTitle = "edit categories";
+        $category = $this->categoriesRepository->find($id);
+        return view('categories::edit', compact(['pageTitle', 'category']));
     }
 
-    public function update(){}
+    public function update(CategoriesRequest $categoriesRequest,$id){}
 
     public function delete(){}
 

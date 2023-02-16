@@ -29,7 +29,7 @@
                 <div class="mb-3">
                     <label for="parent_id">Group</label>
                     <select name="parent_id" id="" class="form-select @error('parent_id') is-invalid @enderror">
-                        <option value="0" selected>Parent</option>
+                        <option value="0" selected>Select Group</option>
                         <option value="1" @if (old('parent_id') == "1") {{ 'selected' }} @endif >Parent</option>
                     </select>
                     @error('parent_id')

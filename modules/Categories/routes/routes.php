@@ -9,8 +9,8 @@ Route::prefix('admin')->name('admin.')->middleware('web')
         Route::get('/data', 'CategoriesController@data')->name('data');
         Route::get('/create','CategoriesController@create')->name('create');
         Route::post('/create','CategoriesController@store')->name('store');
-        Route::get('/edit/{categories}','CategoriesController@edit')->name('edit');
-        Route::put('/update/{categories}','CategoriesController@update')->name('update');
-        Route::delete('/delete/{categories}','CategoriesController@delete')->name('delete');
+        Route::get('/edit/{category}','CategoriesController@edit')->name('edit');
+        Route::put('/update/{category}','CategoriesController@update')->name('update');
+        Route::delete('/delete/{category}','CategoriesController@delete')->name('delete');
     });
 });

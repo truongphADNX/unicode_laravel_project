@@ -43,9 +43,7 @@ class UserController extends Controller{
     }
 
     public function create() {
-
         $pageTitle = 'Them moi nguoi dung';
-
         return view('user::add',compact('pageTitle'));
     }
 
@@ -64,7 +62,6 @@ class UserController extends Controller{
     }
 
     public function edit($id){
-
         $user = $this->userRepository->find($id);
 
         $pageTitle = 'Cập nhật người dùng';
