@@ -7,4 +7,5 @@ use App\Repositories\RepositoryInterface;
 interface CategoriesRepositoryInterface extends RepositoryInterface{
 
     public function getCategoriess();
+    public function getAllCategories();
 }

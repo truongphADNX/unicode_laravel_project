@@ -10,7 +10,7 @@
             <div class="col-6">
                 <div class="mb-3">
                     <label for="name">Name</label>
-                    <input class="form-control @error('name') is-invalid @enderror" type="text" value="{{ old('name') ?? $category->name }}" placeholder="Input name ..." name="name">
+                    <input class="form-control title @error('name') is-invalid @enderror" type="text" value="{{ old('name') ?? $category->name }}" placeholder="Input name ..." name="name">
                     @error('name')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -21,7 +21,7 @@
             <div class="col-6">
                 <div class="mb-3">
                     <label for="slug">Slug</label>
-                    <input class="form-control @error('slug') is-invalid @enderror" type="text" value="{{ old('slug') ?? $category->slug }}" placeholder="Input slug ..." name="slug">
+                    <input class="form-control slug @error('slug') is-invalid @enderror" type="text" value="{{ old('slug') ?? $category->slug }}" placeholder="Input slug ..." name="slug">
                     @error('slug')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -45,6 +45,6 @@
             </div>
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
-        <a href="{{ route('admin.users.index') }}" class="btn btn-danger" >Back</a>
+        <a href="{{ route('admin.categories.index') }}" class="btn btn-danger" >Back</a>
     </form>
 @endsection

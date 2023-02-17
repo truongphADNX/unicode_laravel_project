@@ -41,7 +41,7 @@
             ajax: '{{ route('admin.categories.data') }}',
             columns: [
                 { data: 'name' },
-                { data: 'slug' },
+                { data: 'link' },
                 { data: 'created_at' },
                 { data: 'update' },
                 { data: 'delete' },
