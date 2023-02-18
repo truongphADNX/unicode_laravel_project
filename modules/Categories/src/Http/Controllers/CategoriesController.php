@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+use Modules\Categories\src\Models\Category;
 use Modules\Categories\src\Http\Requests\CategoriesRequest;
 use Modules\Categories\src\Repositories\CategoriesRepository;
 
-class CategoriesController extends Controller
+class CategoriesController extends  Controller
 {
     protected $categoriesRepository;
 
