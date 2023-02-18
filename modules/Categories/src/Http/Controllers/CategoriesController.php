@@ -50,10 +50,9 @@ class CategoriesController extends Controller
     {
         $pageTitle = "Create categories";
 
-        $categories = $this->categoriesRepository->getCategoriess()->toArray();
-        dd($categories);
+        $categories = $this->categoriesRepository->getCategoriess();
 
-        return view('categories::add', compact('pageTitle',));
+        return view('categories::add', compact(['pageTitle','categories']));
     }
 
     public function store(CategoriesRequest $categoriesRequest)
@@ -68,7 +67,8 @@ class CategoriesController extends Controller
     {
         $pageTitle = "edit categories";
         $category = $this->categoriesRepository->find($id);
-        return view('categories::edit', compact(['pageTitle', 'category']));
+        $categories = $this->categoriesRepository->getCategoriess();
+        return view('categories::edit', compact(['pageTitle','categories', 'category']));
     }
 
     public function update(CategoriesRequest $categoriesRequest, $id)
