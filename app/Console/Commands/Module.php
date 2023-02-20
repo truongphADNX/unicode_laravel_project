@@ -54,6 +54,7 @@ class Module extends Command
             $helperFolder = base_path('modules/' . $name . '/helpers');
             if (!File::exists($helperFolder)) {
                 File::makeDirectory($helperFolder, 0755, true, true);
+
             }
 
             //routes
@@ -78,7 +79,7 @@ class Module extends Command
             //migrations
             $migrationFolder = base_path('modules/' . $name . '/migrations');
             if (!File::exists($migrationFolder)) {
-                File::makeDirectory($migrationFolder, );
+                File::makeDirectory($migrationFolder, 0755, true, true);
             }
 
             //resources

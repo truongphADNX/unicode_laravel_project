@@ -4,10 +4,7 @@ namespace Modules;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
-use Modules\User\src\Commands\DemoCommand;
-use Modules\User\src\Http\Middlewares\DemoMiddleware;
-
-class ModuleServiceProvider extends ServiceProvider
+        class ModuleServiceProvider extends ServiceProvider
 {
 
     private $middlewares = [
