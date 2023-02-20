@@ -35,9 +35,10 @@
             // scrollY: 400,
             // searching: false,
             // ordering:  false,
-            lengthMenu: [ 10, 25, 50, 75, 100 ],
+            lengthMenu: [ 1, 2, 3, 5, 10, 25,50,100 ],
             processing: true,
             serverSide: true,
+            pageLength: 2,
             ajax: '{{ route('admin.categories.data') }}',
             columns: [
                 { data: 'name' },

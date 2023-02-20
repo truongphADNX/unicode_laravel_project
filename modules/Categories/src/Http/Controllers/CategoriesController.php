@@ -17,6 +17,8 @@ class CategoriesController extends  Controller
 
     public function __construct(CategoriesRepository $categoriesRepository)
     {
+        $word = "news";
+        dd(ConvertNoun($word,true));
         $this->categoriesRepository = $categoriesRepository;
     }
 
@@ -24,13 +26,16 @@ class CategoriesController extends  Controller
     {
         $pageTitle = "Quan ly danh muc";
 
+        $categories = $this->categoriesRepository->getAllCategories()->get();;
+
         return view("categories::list", compact(['pageTitle']));
     }
 
     public function data()
     {
-        $categories = $this->categoriesRepository->getAllCategories()->get();;
-        return DataTables::of($categories)
+        $categories = $this->categoriesRepository->getAllCategories()->get();
+
+        $categories = DataTables::of($categories)
             ->addColumn('update', function ($category) {
                 return '<a href="' . route('admin.categories.edit', $category) . '" class="btn btn-warning">Update</a>';
             })
@@ -44,7 +49,33 @@ class CategoriesController extends  Controller
                 return Carbon::parse($category->created_at)->format('Y/m/d h:i:s');
             })
             ->rawColumns(['update', 'delete', 'link'])
-            ->toJson();
+            ->toArray();
+
+            $categories['data'] = $this->getCategoriesTable($categories['data']);
+           return $categories;
+    }
+
+    public function getCategoriesTable($categories, $char = "", &$result = []){
+        if ($categories) {
+            foreach ($categories as $key => $category) {
+                $row = $category;
+                $row['name'] = $char.$row['name'];
+                $row['created_at'] = Carbon::parse($row['created_at'])->format('Y/m/d h:i:s');
+                $row['update'] = '<a href="' . route('admin.categories.edit', $row['id']) . '" class="btn btn-warning">Update</a>';
+                $row['delete'] = '<a href="' . route('admin.categories.delete', $row['id']) . '" class="btn btn-danger delete-action">Delete</a>';
+                $row['link'] = '<a href="#" class="btn btn-primary">View</a>';
+
+                //Nếu thay $row bằng $category thì sẽ unset luôn các subcaregoris trong parent_categories.
+                unset($row['sub_categories']);
+                unset($row['updated_at']);
+                unset($row['parent_id']);
+                $result[] = $row;
+                if (!empty($category['sub_categories'])) {
+                    $this->getCategoriesTable($category['sub_categories'], $char.'|--', $result);
+                }
+            }
+        }
+        return $result;
     }
 
     public function create()
