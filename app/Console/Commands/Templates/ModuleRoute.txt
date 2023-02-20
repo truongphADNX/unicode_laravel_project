@@ -2,6 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['namespace' => 'Modules\{module}\src\Http\Controllers','name'=>'{lowername}.','prefix'=>'{lowername}'], function () {
-    Route::get('/','{module}Controller@index');
+Route::prefix('admin')->name('admin.')->middleware('web')
+->namespace('Modules\{module}\src\Http\Controllers')->group(function () {
+    Route::prefix('{prefix}')->name('{name}.')->group(function () {
+        Route::get('/','{module}Controller@index')->name('index');
+        Route::get('/data', '{module}Controller@data')->name('data');
+        Route::get('/create','{module}Controller@create')->name('create');
+        Route::post('/create','{module}Controller@store')->name('store');
+        Route::get('/edit/{{argument}}','{module}Controller@edit')->name('edit');
+        Route::put('/update/{{argument}}','{module}Controller@update')->name('update');
+        Route::delete('/delete/{{argument}}','{module}Controller@delete')->name('delete');
+    });
 });
+

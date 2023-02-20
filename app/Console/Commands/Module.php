@@ -54,14 +54,16 @@ class Module extends Command
             $helperFolder = base_path('modules/' . $name . '/helpers');
             if (!File::exists($helperFolder)) {
                 File::makeDirectory($helperFolder, 0755, true, true);
-
+                $helperFile = base_path('modules/' . $name . '/helpers/function.php');
+                if (!File::exists($helperFile)) {
+                    File::put($helperFile, "<?php\n");
+                }
             }
 
             //routes
             $routeFolder = base_path('modules/' . $name . '/routes');
             if (!File::exists($routeFolder)) {
                 File::makeDirectory($routeFolder, 0755, true, true);
-                $lowerName = strtolower($name);
                 $routeFile = base_path('modules/' . $name . '/routes/routes.php');
                 if (!File::exists($routeFile)) {
                     $moduleRouteFile = app_path('Console/Commands/Templates/ModuleRoute.txt');
@@ -69,12 +71,13 @@ class Module extends Command
                     if (File::exists($moduleRouteFile)) {
                         $moduleRouteContent = file_get_contents($moduleRouteFile);
                         $moduleRouteContent = str_replace('{module}',$name,$moduleRouteContent);
-                        $moduleRouteContent = str_replace('{lowername}',$lowerName,$moduleRouteContent);
+                        $moduleRouteContent = str_replace(['{prefix}', '{name}'],strtolower(ConvertNoun($name,true)),$moduleRouteContent);
+                        $moduleRouteContent = str_replace('{argument}',strtolower(ConvertNoun($name)),$moduleRouteContent);
                     }
                     File::put($routeFile, $moduleRouteContent);
                 }
             }
-
+////////////////////////////////here////////////////////////////////////////////////////////////////
 
             //migrations
             $migrationFolder = base_path('modules/' . $name . '/migrations');
@@ -199,6 +202,7 @@ class Module extends Command
                         }
                         File::put($repositoriesInterface,$moduleRepoInterfaceContent);
                     }
+
 
                     //create file name-repository
                     $repositoriesInterface = base_path('modules/' . $name . '/src/Repositories/'.$name.'Repository.php');
