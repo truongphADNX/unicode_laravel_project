@@ -1,0 +1,29 @@
+<?php
+
+namespace Modules\{module}\seeders;
+
+use Faker\Factory;
+use Illuminate\Database\Seeder;
+use Modules\{module}\src\Models\{module};
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
+class {module}Seeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+
+        $faker = Factory::create();
+        $limit = 20;
+        for ($i = 0; $i < $limit; $i++) {
+            DB::table('{table}')->insert([
+            'name' => $faker->name,
+            ]);
+        }
+    }
+}

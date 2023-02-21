@@ -3,11 +3,49 @@
 namespace Modules\{module}\src\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use Modules\{module}\src\Models\{module};
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
+use Modules\{module}\src\Http\Requests\{module}Request;
+use Modules\{module}\src\Repositories\{module}Repository;
+
 class {module}Controller extends Controller{
+
+    protected ${name}Repository;
+    public function __construct({module}Repository ${name}Repository)
+    {
+        $this->{name}Repository = ${name}Repository;
+    }
+
     public function index() {
-        return "Hello world";
+
+        $pageTitle = '';
+
+        return view('{name}::list_{names}',compact('pageTitle'));
+    }
+
+    public function data() {
+        return;
+    }
+
+    public function create() {
+        return;
+    }
+
+    public function store({module}Request ${name}Request){
+        return;
+    }
+
+    public function edit($id){
+        return;
+    }
+
+    public function update({module}Request ${name}Request, $id){
+        return;
+    }
+    public function delete($id){
+        return;
     }
 }
