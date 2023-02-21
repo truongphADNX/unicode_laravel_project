@@ -101,6 +101,16 @@ class Module extends Command
             $migrationFolder = base_path('modules/' . $name . '/migrations');
             if (!File::exists($migrationFolder)) {
                 File::makeDirectory($migrationFolder, 0755, true, true);
+                $migrationFile = base_path('modules/'. $name. '/migrations/'.date('Y_m_d_His').'_create_'.strtolower(ConvertNoun($name,true)).'_table.php');
+                if (!File::exists($migrationFile)) {
+                    $moduleMigrationFile = app_path('Console/Commands/Templates/ModuleMigration.txt');
+                    $moduleMigrationContent = "";
+                    if (File::exists($moduleMigrationFile)) {
+                        $moduleMigrationContent = file_get_contents($moduleMigrationFile);
+                        $moduleMigrationContent = str_replace('{table}',strtolower(ConvertNoun($name,true)),$moduleMigrationContent);
+                    }
+                    File::put($migrationFile, $moduleMigrationContent);
+                }
             }
 
             //resources

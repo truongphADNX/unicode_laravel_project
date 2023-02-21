@@ -18,7 +18,9 @@ class CategoriesController extends  Controller
     public function __construct(CategoriesRepository $categoriesRepository)
     {
         $word = "news";
-        dd(ConvertNoun($word,true));
+        $name = "Category";
+        $migrationFile = base_path('modules/'. $name. '/migrations/'.date('Y_m_d_His').'_create_'.strtolower(ConvertNoun($name,true)).'_table.php');
+        dd($migrationFile);
         $this->categoriesRepository = $categoriesRepository;
     }
 
