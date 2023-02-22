@@ -2,9 +2,13 @@
 @section('stylesheets')
     <style>
         img {
-        max-width: 100%;
-        height: auto;
-    }
+            max-width: 100% ;
+            height: auto !important;
+        }
+        #holder img {
+            max-width: 100% !important;
+            height: auto;
+        }
     </style>
 @endsection
 @section('content')
@@ -112,7 +116,7 @@
             <div class="col-12">
                 <div class="mb-3">
                     <label for="supports">Supports</label>
-                    <textarea class="form-control @error('detail') is-invalid @enderror" name="supports" id="" cols="30" rows="5">{{ old('supports') }}</textarea>
+                    <textarea class="form-control ckeditor @error('detail') is-invalid @enderror" name="supports" id="" cols="30" rows="5">{{ old('supports') }}</textarea>
                     @error('supports')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -123,7 +127,7 @@
             <div class="col-12">
                 <div class="mb-3">
                     <label for="detail">Detail</label>
-                    <textarea class="form-control @error('detail') is-invalid @enderror" name="detail" id="" cols="30" rows="5">{{ old('detail') }}</textarea>
+                    <textarea class="form-control ckeditor @error('detail') is-invalid @enderror" name="detail" id="" cols="30" rows="5">{{ old('detail') }}</textarea>
                     @error('detail')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -136,7 +140,7 @@
                     <div class="row align-items-end">
                         <div class="col-7">
                             <label for="thumbnail">Avatar</label>
-                            <input class="form-control @error('thumbnail') is-invalid @enderror" value="{{ old('thumbnail') }}" type="text" placeholder="Input thumbnail ..." name="thumbnail">
+                            <input id="thumbnail" class="form-control @error('thumbnail') is-invalid @enderror" value="{{ old('thumbnail') }}" type="text" placeholder="Input thumbnail ..." name="thumbnail">
                             @error('thumbnail')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -144,10 +148,10 @@
                             @enderror
                         </div>
                         <div class="col-2 d-grid">
-                            <button type="button" class="btn btn-primary">Chosse</button>
+                            <button id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">Chosse</button>
                         </div>
                         <div class="col-3">
-                            <img src="https://fastly.picsum.photos/id/25/5000/3333.jpg?hmac=yCz9LeSs-i72Ru0YvvpsoECnCTxZjzGde805gWrAHkM" alt="">
+                            <div id="holder"></div>
                         </div>
                     </div>
                 </div>

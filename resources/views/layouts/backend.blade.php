@@ -31,6 +31,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+        <script>
+            {!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/stand-alone-button.js'))  !!};
+            var route_prefix = "/laravel-filemanager";
+            $('#lfm').filemanager('image', {prefix: route_prefix});
+        </script>
+        <script src="{{ asset('backend/plugins/ckeditor/ckeditor.js') }}"></script>
         <script src="{{ asset('backend/js/scripts.js') }}"></script>
         @yield('scripts')
     </body>
