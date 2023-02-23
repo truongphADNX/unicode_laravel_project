@@ -36,6 +36,7 @@
             {!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/stand-alone-button.js'))  !!};
             var route_prefix = "/laravel-filemanager";
             $('#lfm').filemanager('image', {prefix: route_prefix});
+            // $('#lfm').filemanager('file', {prefix: route_prefix});
         </script>
         <script src="{{ asset('backend/plugins/ckeditor/ckeditor.js') }}"></script>
         <script src="{{ asset('backend/js/scripts.js') }}"></script>

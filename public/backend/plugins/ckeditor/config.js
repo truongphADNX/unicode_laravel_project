@@ -6,7 +6,7 @@
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'en';
-	config.uiColor = '#AADC6E';
+	config.uiColor = '#EDA5DE';
     config.filebrowserImageBrowseUrl = '/laravel-filemanager?type=Images',
     config.filebrowserImageUploadUrl = '/laravel-filemanager/upload?type=Images&_token=',
     config.filebrowserBrowseUrl = '/laravel-filemanager?type=Files',

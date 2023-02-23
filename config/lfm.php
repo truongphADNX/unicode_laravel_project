@@ -150,6 +150,7 @@ return [
     'file_type_array'          => [
         'pdf'  => 'Adobe Acrobat',
         'doc'  => 'Microsoft Word',
+        'txt'  => 'Microsoft Word',
         'docx' => 'Microsoft Word',
         'xls'  => 'Microsoft Excel',
         'xlsx' => 'Microsoft Excel',

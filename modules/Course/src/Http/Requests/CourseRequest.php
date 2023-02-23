@@ -24,7 +24,19 @@ class CourseRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|max:255',
+            'slug' => 'required|max:255',
+            'detail' => 'required',
+            'teacher_id' => ['required', 'integer', function ($attribute, $value, $fail) {
+                if ($value == 0) {
+                    $fail(__('course::validation.select'));
+                }
+            }],
+            'code' => 'required|max:255',
+            'is_document' => 'required|integer',
+            'status' => 'required|integer',
+            'supports' => 'required',
+            'thumbnail' => 'required|max:255',
         ];
     }
 
@@ -32,13 +44,13 @@ class CourseRequest extends FormRequest
     {
         return [
             'required' => __('course::validation.required'),
+            'max' => __('course::validation.max'),
+            'integer' => __('course::validation.integer'),
         ];
     }
 
     public function attributes()
     {
-        return [
-            'name' => __('course::validation.name'),
-        ];
+        return __('course::validation.attributes');
     }
 }
