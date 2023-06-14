@@ -7,7 +7,7 @@
         }
 
         #holder img {
-            max-width: 100% !important;
+            width: 100% !important;
             height: auto;
         }
     </style>
@@ -150,7 +150,7 @@
             <div class="col-12">
                 <div class="mb-3">
                     <div class="row align-items-end">
-                        <div class="col-7">
+                        <div class="col-8">
                             <label for="thumbnail">Avatar</label>
                             <input type="text" id="thumbnail" class="form-control @error('thumbnail') is-invalid @enderror"
                                 value="{{ old('thumbnail') }}" placeholder="Input thumbnail ..."
@@ -161,7 +161,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col-2 d-grid">
+                        <div class="col-1 d-grid">
                             <button type="button" id="lfm" data-input="thumbnail" data-preview="holder"
                                 class="btn btn-primary">Chosse</button>
                         </div>

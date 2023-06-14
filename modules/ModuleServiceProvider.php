@@ -12,6 +12,7 @@ use Illuminate\Support\ServiceProvider;
 
     private $commands = [
     ];
+    // get base name
      private function getModules(){
         $directories = array_map('basename', File::directories(__DIR__));
         return $directories;
@@ -19,12 +20,15 @@ use Illuminate\Support\ServiceProvider;
     public function boot()
     {
         $modules= $this->getModules();
+
         if (!empty($modules)) {
             foreach ($modules as $directory) {
                 $this->registerModule($directory);
             }
         }
     }
+
+    // dang ky Configuration
     private function registerConfig($directory){
         $configPath = $directory . '/configs';
         if (File::exists(__DIR__ . '/' .$configPath)) {
@@ -37,6 +41,7 @@ use Illuminate\Support\ServiceProvider;
         }
     }
 
+    // dang ky middleware
     private function registerMiddleware(){
         if (!empty($this->middlewares)) {
             foreach ($this->middlewares as $key => $middleware) {
@@ -68,6 +73,7 @@ use Illuminate\Support\ServiceProvider;
         $this->app->singleton(
             Modules\User\src\Repositories\UserRepository::class,
             Modules\Categories\src\Repositories\CategoriesRepository::class,
+            Modules\Course\src\Repositories\CourseRepository::class,
         );
     }
 

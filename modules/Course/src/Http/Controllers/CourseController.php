@@ -35,13 +35,26 @@ class CourseController extends Controller{
             ->addColumn('delete',function($course){
                 return '<a href="'.route('admin.courses.delete',$course).'" class="btn btn-danger delete-action">Delete</a>';
             })
-            ->addColumn('link',function($course){
-                return '<a target=_blank href="#" class="btn btn-info">View</a>';
+            ->addColumn('status',function($course){
+                return $course->status == 0  ? '<button class="btn btn-primary">Active</button>' : '<button class="btn btn-danger">InActive</button>' ;
+            })
+            ->addColumn('price',function($course){
+                $price = $course->sale_price;
+                if($course->price){
+                    if ($course->sale_price) {
+                        $price = number_format($course->sale_price).' đ';
+                    }else {
+                        $price = number_format($course->price).' đ';
+                    }
+                }else {
+                    $price = "Free";
+                }
+                return $price;
             })
             ->editColumn('created_at', function($course){
                 return Carbon::parse($course->updated_at)->format('Y-m-d H:i:s');
             })
-            ->rawColumns(['update','delete','link'])
+            ->rawColumns(['update','delete','status', 'price'])
             ->toJson();
     }
 
@@ -51,6 +64,19 @@ class CourseController extends Controller{
     }
 
     public function store(CourseRequest $courseRequest){
+        $course = $courseRequest->except(['_token','_method']);
+
+        if (!$course['price']) {
+            $course['price'] = 0;
+        }
+
+        if (!$course['sale_price']) {
+            $course['sale_price'] = 0;
+        }
+
+        $this->courseRepository->create($course);
+
+        return redirect()->route('admin.courses.index')->with('msg', __('course::messages.create.success'));
     }
 
     public function edit($id){

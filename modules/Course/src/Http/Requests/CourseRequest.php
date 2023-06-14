@@ -46,6 +46,7 @@ class CourseRequest extends FormRequest
             'required' => __('course::validation.required'),
             'max' => __('course::validation.max'),
             'integer' => __('course::validation.integer'),
+            'select' => __('course::validation.select'),
         ];
     }
 
