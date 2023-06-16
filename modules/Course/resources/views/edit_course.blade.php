@@ -13,8 +13,11 @@
     </style>
 @endsection
 @section('content')
-    <form action="{{ route('admin.courses.store') }}" method="post">
-        @method('POST')
+@if (session('msg'))
+    <div class="alert alert-success">{{ session('msg') }}</div>
+@endif
+    <form action="{{ route('admin.courses.update',$course) }}" method="POST">
+        @method('PUT')
         @csrf
         <div class="row">
             <div class="col-6">
@@ -46,7 +49,7 @@
                     <label for="teacher_id">Select teacher</label>
                     <select name="teacher_id" id="" class="form-select @error('teacher_id') is-invalid @enderror">
                         <option value="0" selected>Select teacher</option>
-                        <option value="1" @if (old('teacher_id') == '1') {{ 'selected' }} @endif>Tiến Bịp
+                        <option value="1" @if (old('teacher_id') == 1 || $course->teacher_id == 1 ) {{ 'selected' }} @endif>Tiến Bịp
                         </option>
                     </select>
                     @error('teacher_id')
@@ -97,8 +100,8 @@
                     <label for="is_document">Documents</label>
                     <select name="is_document" id=""
                         class="form-select @error('is_document') is-invalid @enderror">
-                        <option value="0" @if (old('is_document') == '0') {{ 'selected' }} @endif>No</option>
-                        <option value="1" @if (old('is_document') == '1') {{ 'selected' }} @endif>Yes</option>
+                        <option value="0" {{ old('is_document') == 0 || $course->is_document == 0 ? 'selected' : false }}>No</option>
+                        <option value="1" {{ old('is_document') == 1 || $course->is_document == 1 ? 'selected' : false }}>Yes</option>
                     </select>
                     @error('is_document')
                         <div class="invalid-feedback">
@@ -111,9 +114,9 @@
                 <div class="mb-3">
                     <label for="status">Status</label>
                     <select name="status" id="" class="form-select @error('status') is-invalid @enderror">
-                        <option value="0" @if (old('status') == '0') {{ 'selected' }} @endif>Active
+                        <option value="0" {{ old('status') == 0 || $course->status == 0 ? 'selected' : false }}>Active
                         </option>
-                        <option value="1" @if (old('status') == '1') {{ 'selected' }} @endif>InActive
+                        <option value="1" {{ old('status') == 1 || $course->status == 1 ? 'selected' : false }}>InActive
                         </option>
                     </select>
                     @error('status')
@@ -153,7 +156,7 @@
                         <div class="col-8">
                             <label for="thumbnail">Avatar</label>
                             <input type="text" id="thumbnail" class="form-control @error('thumbnail') is-invalid @enderror"
-                                value="{{ old('thumbnail') }}" placeholder="Input thumbnail ..."
+                                value="{{ old('thumbnail') ?? $course->thumbnail }}" placeholder="Input thumbnail ..."
                                 name="thumbnail">
                             @error('thumbnail')
                                 <div class="invalid-feedback">
@@ -167,8 +170,8 @@
                         </div>
                         <div class="col-3">
                             <div id="holder">
-                                @if (old('thumbnail'))
-                                    <img src="{{ old('thumbnail') }}" alt="">
+                                @if (old('thumbnail') || $course->thumbnail)
+                                    <img src="{{ old('thumbnail') ?? $course->thumbnail }}" alt="">
                                 @endif
                             </div>
                         </div>
@@ -177,6 +180,6 @@
             </div>
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
-        <a href="{{ route('admin.users.index') }}" class="btn btn-danger">Back</a>
+        <a href="{{ route('admin.courses.index') }}" class="btn btn-danger">Back</a>
     </form>
 @endsection

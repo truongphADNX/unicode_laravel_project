@@ -2,21 +2,24 @@
 
 namespace Modules\Course\src\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Modules\Course\src\Models\Course;
-use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Modules\Course\src\Models\Course;
 use Yajra\DataTables\Facades\DataTables;
 use Modules\Course\src\Http\Requests\CourseRequest;
 use Modules\Course\src\Repositories\CourseRepository;
+use Modules\Categories\src\Repositories\CategoriesRepository;
 
 class CourseController extends Controller{
 
     protected $courseRepository;
-    public function __construct(CourseRepository $courseRepository)
+    protected $categoriesRepository;
+    public function __construct(CourseRepository $courseRepository, CategoriesRepository $categoriesRepository)
     {
         $this->courseRepository = $courseRepository;
+        $this->categoriesRepository =  $categoriesRepository;
     }
 
     public function index() {
@@ -60,7 +63,8 @@ class CourseController extends Controller{
 
     public function create() {
         $pageTitle = 'Create Course';
-        return view('course::add_course',compact('pageTitle'));
+        $categories = $this->categoriesRepository->getAllCategories();
+        return view('course::add_course',compact(['pageTitle','categories']));
     }
 
     public function store(CourseRequest $courseRequest){
@@ -86,6 +90,10 @@ class CourseController extends Controller{
     }
 
     public function update(CourseRequest $courseRequest, $id){
+        $course = $courseRequest->except(['_method','_token']);
+        $this->courseRepository->update($id,$course);
+
+        return back()->with('msg', __('course::messages.update.success'));
     }
     public function delete($id){
         $course = $this->courseRepository->delete($id);

@@ -6,6 +6,6 @@ use App\Repositories\RepositoryInterface;
 
 interface CategoriesRepositoryInterface extends RepositoryInterface{
 
-    public function getCategoriess();
+    public function getCategories();
     public function getAllCategories();
 }

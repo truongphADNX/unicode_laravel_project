@@ -10,6 +10,11 @@
             width: 100% !important;
             height: auto;
         }
+
+        .list__categories {
+            max-height: 200px;
+            overflow-y: scroll;
+        }
     </style>
 @endsection
 @section('content')
@@ -145,6 +150,14 @@
                             {{ $message }}
                         </div>
                     @enderror
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="mb-3 form-group">
+                    <label for="detail" class="mb-2">Chose category</label>
+                    <div class="list__categories">
+                        {{ getCategoriesCheckbox($categories) }}
+                    </div>
                 </div>
             </div>
             <div class="col-12">

@@ -24,14 +24,14 @@ class CategoriesController extends  Controller
     {
         $pageTitle = "Quan ly danh muc";
 
-        $categories = $this->categoriesRepository->getAllCategories()->get();;
+        // $categories = $this->categoriesRepository->getCategories()->get();
 
         return view("categories::list", compact(['pageTitle']));
     }
 
     public function data()
     {
-        $categories = $this->categoriesRepository->getAllCategories()->get();
+        $categories = $this->categoriesRepository->getCategories()->get();
 
         $categories = DataTables::of($categories)
             ->addColumn('update', function ($category) {
@@ -80,7 +80,7 @@ class CategoriesController extends  Controller
     {
         $pageTitle = "Create categories";
 
-        $categories = $this->categoriesRepository->getCategoriess();
+        $categories = $this->categoriesRepository->getAllCategories();
 
         return view('categories::add', compact(['pageTitle','categories']));
     }
@@ -97,7 +97,7 @@ class CategoriesController extends  Controller
     {
         $pageTitle = "edit categories";
         $category = $this->categoriesRepository->find($id);
-        $categories = $this->categoriesRepository->getCategoriess();
+        $categories = $this->categoriesRepository->getAllCategories();
         return view('categories::edit', compact(['pageTitle','categories', 'category']));
     }
 

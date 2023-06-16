@@ -14,12 +14,12 @@ class CategoriesRepository extends BaseRepository implements CategoriesRepositor
         return Category::class;
     }
 
-    public function getCategoriess()
+    public function getAllCategories()
     {
-        return $this->model->get();
+        return $this->getAll();
     }
 
-    public function getAllCategories()
+    public function getCategories()
     {
         return $this->model->with('subCategories')
         ->whereParentId(0)->select([
