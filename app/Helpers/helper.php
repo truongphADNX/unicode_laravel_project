@@ -72,9 +72,6 @@ function ConvertNoun($word,$bool = false) {
             if (substr($word, -1) === "y") {
                 $word = substr($word, 0, -1);
                 $suffix = "ies";
-            } elseif (substr($word, -2, 2) === "us") {
-                $word = substr($word, 0, -2);
-                $suffix = "i";
             } elseif (substr($word, -1) === "f" ){
                 $word = substr($word, 0, -1);
                 $suffix = "ves";
