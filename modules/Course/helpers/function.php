@@ -6,7 +6,7 @@ function  getCategoriesCheckbox($categories,$old='', $parentID = 0, $char = ""){
         foreach ($categories as $key => $category) {
             if ($category->parent_id == $parentID) {
                 if ($category->id != $id ) {
-                    echo '<label class="d-block"><input type="checkbox"/>'.$char.$category->name.' ></label>';
+                    echo '<label class="d-block"><input type="checkbox" name="categories[]" value="'.$category->id.'"/> '.$char.$category->name.' ></label>';
                     unset($categories[$key]);
                     getCategoriesCheckbox($categories,$old, $category->id, $char.'|-');
                 }

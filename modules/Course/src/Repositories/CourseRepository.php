@@ -20,4 +20,8 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
             'id', 'name', 'status', 'price', 'sale_price', 'created_at'
         ])->latest();
     }
+
+    public function createCourseCategories($course, $data){
+        return;
+    }
 }

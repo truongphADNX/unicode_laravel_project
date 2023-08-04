@@ -154,10 +154,15 @@
             </div>
             <div class="col-12">
                 <div class="mb-3 form-group">
-                    <label for="detail" class="mb-2">Chose category</label>
+                    <label for="" class="mb-2">Chose category</label>
                     <div class="list__categories">
                         {{ getCategoriesCheckbox($categories) }}
                     </div>
+                    @error('categories')
+                        <div class="invalid-feedback d-block">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
             </div>
             <div class="col-12">

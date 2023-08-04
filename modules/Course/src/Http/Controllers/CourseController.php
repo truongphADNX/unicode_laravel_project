@@ -68,6 +68,7 @@ class CourseController extends Controller{
     }
 
     public function store(CourseRequest $courseRequest){
+        dd($courseRequest->all());
         $course = $courseRequest->except(['_token','_method']);
 
         if (!$course['price']) {
@@ -78,7 +79,9 @@ class CourseController extends Controller{
             $course['sale_price'] = 0;
         }
 
-        $this->courseRepository->create($course);
+        $course = $this->courseRepository->create($course);
+
+        $this->courseRepository->createCourseCategories($course, $courseRequest['categories']);
 
         return redirect()->route('admin.courses.index')->with('msg', __('course::messages.create.success'));
     }

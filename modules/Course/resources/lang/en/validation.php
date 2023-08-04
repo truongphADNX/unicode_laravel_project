@@ -11,7 +11,8 @@ return [
         'status' => 'Course status',
         'supports' => 'Course supports',
         'detail' => 'Course detail',
-        'thumbnail' => 'Course thumbnail'
+        'thumbnail' => 'Course thumbnail',
+        'categories' => 'Course categories'
     ],
 
     //messages

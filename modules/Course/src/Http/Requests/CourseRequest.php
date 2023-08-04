@@ -37,6 +37,7 @@ class CourseRequest extends FormRequest
             'status' => 'required|integer',
             'supports' => 'required',
             'thumbnail' => 'required|max:255',
+            'categories' => 'required',
         ];
     }
 

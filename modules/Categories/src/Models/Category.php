@@ -2,8 +2,9 @@
 
 namespace Modules\Categories\src\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Course\src\Models\Course;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
@@ -21,8 +22,14 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id','id');
     }
+
     public function subCategories()
     {
         return $this->children()->with('subCategories');
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'categories_courses', 'course_id', 'category_id');
     }
 }
