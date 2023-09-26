@@ -21,7 +21,24 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
         ])->latest();
     }
 
-    public function createCourseCategories($course, $data){
-        return;
+    public function createCourseCategories($course, $data)
+    {
+        return $course->categories()->attach($data);
+    }
+
+    public function updateCourseCategories($course, $data)
+    {
+        return $course->categories()->sync($data);
+    }
+
+    public function deleteCourseCategories($course)
+    {
+        return $course->categories()->detach();
+    }
+
+    public function getRelatedCategories($course)
+    {
+        $categoryIds = $course->categories()->allRelatedIds()->toArray();
+        return $categoryIds;
     }
 }

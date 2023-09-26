@@ -155,8 +155,8 @@
             <div class="col-12">
                 <div class="mb-3 form-group">
                     <label for="" class="mb-2">Chose category</label>
-                    <div class="list__categories">
-                        {{ getCategoriesCheckbox($categories) }}
+                    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-2 list__categories">
+                        {{ getCategoriesCheckbox($categories, old('categories')) }}
                     </div>
                     @error('categories')
                         <div class="invalid-feedback d-block">
@@ -167,12 +167,12 @@
             </div>
             <div class="col-12">
                 <div class="mb-3">
-                    <div class="row align-items-end">
+                    <div class="row  {{ $errors->has('thumbnail') ? 'align-items-center' : 'align-items-end' }}">
                         <div class="col-8">
                             <label for="thumbnail">Avatar</label>
-                            <input type="text" id="thumbnail" class="form-control @error('thumbnail') is-invalid @enderror"
-                                value="{{ old('thumbnail') }}" placeholder="Input thumbnail ..."
-                                name="thumbnail">
+                            <input type="text" id="thumbnail"
+                                class="form-control @error('thumbnail') is-invalid @enderror"
+                                value="{{ old('thumbnail') }}" placeholder="Input thumbnail ..." name="thumbnail">
                             @error('thumbnail')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -183,6 +183,7 @@
                             <button type="button" id="lfm" data-input="thumbnail" data-preview="holder"
                                 class="btn btn-primary">Chosse</button>
                         </div>
+
                         <div class="col-3">
                             <div id="holder">
                                 @if (old('thumbnail'))
@@ -195,6 +196,6 @@
             </div>
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
-        <a href="{{ route('admin.users.index') }}" class="btn btn-danger">Back</a>
+        <a href="{{ route('admin.courses.index') }}" class="btn btn-danger">Back</a>
     </form>
 @endsection

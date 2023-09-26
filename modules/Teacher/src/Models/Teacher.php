@@ -1,16 +1,15 @@
 <?php
 
-namespace Modules\Course\src\Models;
+namespace Modules\Teacher\src\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Modules\Categories\src\Models\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Teacher extends Model
 {
     use HasFactory;
 
-    protected $table = 'courses';
+    protected $table = 'teachers';
 
     ////Cấu hình Timestamp
     //public $timestamps = true;
@@ -28,12 +27,10 @@ class Course extends Model
     //protected $connection = 'ten_connection';
 
     protected $fillable = [
-        'name', 'slug', 'detail', 'teacher_id', 'thumbnail', 'price', 'sale_price',
-        'code', 'durations', 'is_document', 'supports', 'status'
+        'name',
+        'slug',
+        'description',
+        'exp',
+        'image',
     ];
-
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class, 'categories_courses', 'course_id', 'category_id');
-    }
 }

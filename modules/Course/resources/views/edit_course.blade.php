@@ -10,13 +10,18 @@
             width: 100% !important;
             height: auto;
         }
+
+        .list__categories {
+            max-height: 200px;
+            overflow-y: scroll;
+        }
     </style>
 @endsection
 @section('content')
-@if (session('msg'))
-    <div class="alert alert-success">{{ session('msg') }}</div>
-@endif
-    <form action="{{ route('admin.courses.update',$course) }}" method="POST">
+    @if (session('msg'))
+        <div class="alert alert-success">{{ session('msg') }}</div>
+    @endif
+    <form action="{{ route('admin.courses.update', $course) }}" method="POST">
         @method('PUT')
         @csrf
         <div class="row">
@@ -49,7 +54,7 @@
                     <label for="teacher_id">Select teacher</label>
                     <select name="teacher_id" id="" class="form-select @error('teacher_id') is-invalid @enderror">
                         <option value="0" selected>Select teacher</option>
-                        <option value="1" @if (old('teacher_id') == 1 || $course->teacher_id == 1 ) {{ 'selected' }} @endif>Tiến Bịp
+                        <option value="1" @if (old('teacher_id') == 1 || $course->teacher_id == 1) {{ 'selected' }} @endif>Tiến Bịp
                         </option>
                     </select>
                     @error('teacher_id')
@@ -62,8 +67,9 @@
             <div class="col-6">
                 <div class="mb-3">
                     <label for="code">Course Code</label>
-                    <input class="form-control @error('code') is-invalid @enderror" value="{{ old('code') ?? $course->code }}"
-                        type="text" placeholder="Input course code ..." name="code">
+                    <input class="form-control @error('code') is-invalid @enderror"
+                        value="{{ old('code') ?? $course->code }}" type="text" placeholder="Input course code ..."
+                        name="code">
                     @error('code')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -74,8 +80,9 @@
             <div class="col-6">
                 <div class="mb-3">
                     <label for="price">Price</label>
-                    <input class="form-control @error('price') is-invalid @enderror" value="{{ old('price') ?? $course->price }}"
-                        type="number" placeholder="Input course price ..." name="price">
+                    <input class="form-control @error('price') is-invalid @enderror"
+                        value="{{ old('price') ?? $course->price }}" type="number" placeholder="Input course price ..."
+                        name="price">
                     @error('price')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -86,8 +93,9 @@
             <div class="col-6">
                 <div class="mb-3">
                     <label for="sale_price">Sale Price</label>
-                    <input class="form-control @error('sale_price') is-invalid @enderror" value="{{ old('sale_price') ?? $course->sale_price }}"
-                        type="number" placeholder="Input course sale price ..." name="sale_price">
+                    <input class="form-control @error('sale_price') is-invalid @enderror"
+                        value="{{ old('sale_price') ?? $course->sale_price }}" type="number"
+                        placeholder="Input course sale price ..." name="sale_price">
                     @error('sale_price')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -100,8 +108,10 @@
                     <label for="is_document">Documents</label>
                     <select name="is_document" id=""
                         class="form-select @error('is_document') is-invalid @enderror">
-                        <option value="0" {{ old('is_document') == 0 || $course->is_document == 0 ? 'selected' : false }}>No</option>
-                        <option value="1" {{ old('is_document') == 1 || $course->is_document == 1 ? 'selected' : false }}>Yes</option>
+                        <option value="0"
+                            {{ old('is_document') == 0 || $course->is_document == 0 ? 'selected' : false }}>No</option>
+                        <option value="1"
+                            {{ old('is_document') == 1 || $course->is_document == 1 ? 'selected' : false }}>Yes</option>
                     </select>
                     @error('is_document')
                         <div class="invalid-feedback">
@@ -116,7 +126,8 @@
                     <select name="status" id="" class="form-select @error('status') is-invalid @enderror">
                         <option value="0" {{ old('status') == 0 || $course->status == 0 ? 'selected' : false }}>Active
                         </option>
-                        <option value="1" {{ old('status') == 1 || $course->status == 1 ? 'selected' : false }}>InActive
+                        <option value="1" {{ old('status') == 1 || $course->status == 1 ? 'selected' : false }}>
+                            InActive
                         </option>
                     </select>
                     @error('status')
@@ -151,11 +162,25 @@
                 </div>
             </div>
             <div class="col-12">
+                <div class="mb-3 form-group">
+                    <label for="" class="mb-2">Chose category</label>
+                    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-2 list__categories">
+                        {{ getCategoriesCheckbox($categories, old('categories') ?? $categoryIds) }}
+                    </div>
+                    @error('categories')
+                        <div class="invalid-feedback d-block">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-12">
                 <div class="mb-3">
-                    <div class="row align-items-end">
+                    <div class="row {{ $errors->has('thumbnail') ? 'align-items-center' : 'align-items-end' }}">
                         <div class="col-8">
                             <label for="thumbnail">Avatar</label>
-                            <input type="text" id="thumbnail" class="form-control @error('thumbnail') is-invalid @enderror"
+                            <input type="text" id="thumbnail"
+                                class="form-control @error('thumbnail') is-invalid @enderror"
                                 value="{{ old('thumbnail') ?? $course->thumbnail }}" placeholder="Input thumbnail ..."
                                 name="thumbnail">
                             @error('thumbnail')

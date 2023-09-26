@@ -39,9 +39,9 @@ class Module extends Command
     public function handle()
     {
         $name = $this->argument('name');
-        if(File::exists(base_path('modules/'.$name))){
+        if (File::exists(base_path('modules/' . $name))) {
             $this->error('Module already exists');
-        }else {
+        } else {
             File::makeDirectory(base_path('modules/' . $name), 0755, true, true);
 
             //configs
@@ -72,26 +72,26 @@ class Module extends Command
                     $moduleRouteContent = "";
                     if (File::exists($moduleRouteFile)) {
                         $moduleRouteContent = file_get_contents($moduleRouteFile);
-                        $moduleRouteContent = str_replace('{module}',$name,$moduleRouteContent);
-                        $moduleRouteContent = str_replace(['{prefix}', '{name}'],strtolower(ConvertNoun($name,true)),$moduleRouteContent);
-                        $moduleRouteContent = str_replace('{argument}',strtolower(ConvertNoun($name)),$moduleRouteContent);
+                        $moduleRouteContent = str_replace('{module}', $name, $moduleRouteContent);
+                        $moduleRouteContent = str_replace(['{prefix}', '{name}'], strtolower(ConvertNoun($name, true)), $moduleRouteContent);
+                        $moduleRouteContent = str_replace('{argument}', strtolower(ConvertNoun($name)), $moduleRouteContent);
                     }
--                   File::put($routeFile, $moduleRouteContent);
+                    -File::put($routeFile, $moduleRouteContent);
                 }
             }
 
             //seeders
-            $seedersFolder = base_path('modules/'.$name.'/seeders');
+            $seedersFolder = base_path('modules/' . $name . '/seeders');
             if (!File::exists($seedersFolder)) {
                 File::makeDirectory($seedersFolder, 0755, true, true);
-                $seederFile = base_path('modules/'.$name.'/seeders/'.$name.'Seeder.php');
+                $seederFile = base_path('modules/' . $name . '/seeders/' . $name . 'Seeder.php');
                 if (!File::exists($seederFile)) {
                     $moduleSeederFile = app_path('Console/Commands/Templates/ModuleSeeder.txt');
                     $moduleSeederContent = "";
                     if (File::exists($moduleSeederFile)) {
                         $moduleSeederContent = file_get_contents($moduleSeederFile);
-                        $moduleSeederContent = str_replace('{module}',$name,$moduleSeederContent);
-                        $moduleSeederContent = str_replace('{table}',strtolower(ConvertNoun($name,true)),$moduleSeederContent);
+                        $moduleSeederContent = str_replace('{module}', $name, $moduleSeederContent);
+                        $moduleSeederContent = str_replace('{table}', strtolower(ConvertNoun($name, true)), $moduleSeederContent);
                     }
                     File::put($seederFile, $moduleSeederContent);
                 }
@@ -101,13 +101,13 @@ class Module extends Command
             $migrationFolder = base_path('modules/' . $name . '/migrations');
             if (!File::exists($migrationFolder)) {
                 File::makeDirectory($migrationFolder, 0755, true, true);
-                $migrationFile = base_path('modules/'. $name. '/migrations/'.date('Y_m_d_His').'_create_'.strtolower(ConvertNoun($name,true)).'_table.php');
+                $migrationFile = base_path('modules/' . $name . '/migrations/' . date('Y_m_d_His') . '_create_' . strtolower(ConvertNoun($name, true)) . '_table.php');
                 if (!File::exists($migrationFile)) {
                     $moduleMigrationFile = app_path('Console/Commands/Templates/ModuleMigration.txt');
                     $moduleMigrationContent = "";
                     if (File::exists($moduleMigrationFile)) {
                         $moduleMigrationContent = file_get_contents($moduleMigrationFile);
-                        $moduleMigrationContent = str_replace('{table}',strtolower(ConvertNoun($name,true)),$moduleMigrationContent);
+                        $moduleMigrationContent = str_replace('{table}', strtolower(ConvertNoun($name, true)), $moduleMigrationContent);
                     }
                     File::put($migrationFile, $moduleMigrationContent);
                 }
@@ -148,13 +148,24 @@ class Module extends Command
                         //viFile messages
                         $messagesFile = base_path('modules/' . $name . '/resources/lang/vi/messages.php');
                         if (!File::exists($messagesFile)) {
-                            File::put($messagesFile, "<?php\nreturn [\n];");
+                            $lowerName = strtolower($name);
+                            File::put($messagesFile, "<?php\nreturn [\n
+    'create.success' => 'Create $lowerName successfully',
+    'create.failure' => 'Create $lowerName sailed',
+    'update.success' => 'Update $lowerName successfully',
+    'update.failure' => 'Update $lowerName failed',
+    'delete.success' => 'Delete $lowerName successfully',
+    'delete.failure' => 'Delete $lowerName failed'
+];");
                         }
 
                         //viFile validation
                         $validationFile = base_path('modules/' . $name . '/resources/lang/vi/validation.php');
                         if (!File::exists($validationFile)) {
-                            File::put($validationFile, "<?php\nreturn [\n];");
+                            File::put($validationFile, "<?php\nreturn [\n
+    'required' => ':attribute bắt buộc phải nhập',
+    'name' => 'Tên',
+];");
                         }
                     }
                 }
@@ -165,21 +176,21 @@ class Module extends Command
 
                     //listFile
                     File::makeDirectory($viewsFolder, 0755, true, true);
-                    $listModuleFile = base_path('modules/' . $name . '/resources/views/list_'. strtolower(ConvertNoun($name,true)) .'.blade.php');
+                    $listModuleFile = base_path('modules/' . $name . '/resources/views/list_' . strtolower(ConvertNoun($name, true)) . '.blade.php');
                     if (!File::exists($listModuleFile)) {
                         File::put($listModuleFile, "");
                     }
 
                     //addFile
                     File::makeDirectory($viewsFolder, 0755, true, true);
-                    $addModuleFile = base_path('modules/' . $name . '/resources/views/add_'. strtolower($name) .'.blade.php');
+                    $addModuleFile = base_path('modules/' . $name . '/resources/views/add_' . strtolower($name) . '.blade.php');
                     if (!File::exists($addModuleFile)) {
                         File::put($addModuleFile, "");
                     }
 
                     //addFile
                     File::makeDirectory($viewsFolder, 0755, true, true);
-                    $editModuleFile = base_path('modules/' . $name . '/resources/views/edit_'. strtolower($name) .'.blade.php');
+                    $editModuleFile = base_path('modules/' . $name . '/resources/views/edit_' . strtolower($name) . '.blade.php');
                     if (!File::exists($editModuleFile)) {
                         File::put($editModuleFile, "");
                     }
@@ -214,9 +225,9 @@ class Module extends Command
                             $moduleControllerContent = "";
                             if (File::exists($moduleControllerFile)) {
                                 $moduleControllerContent = file_get_contents($moduleControllerFile);
-                                $moduleControllerContent = str_replace('{module}',$name, $moduleControllerContent);
-                                $moduleControllerContent = str_replace('{name}',strtolower($name), $moduleControllerContent);
-                                $moduleControllerContent = str_replace('{names}',strtolower(ConvertNoun($name,true)), $moduleControllerContent);
+                                $moduleControllerContent = str_replace('{module}', $name, $moduleControllerContent);
+                                $moduleControllerContent = str_replace('{name}', strtolower($name), $moduleControllerContent);
+                                $moduleControllerContent = str_replace('{names}', strtolower(ConvertNoun($name, true)), $moduleControllerContent);
                             }
                             File::put($controllerFile, $moduleControllerContent);
                         }
@@ -228,15 +239,15 @@ class Module extends Command
                         File::makeDirectory($middlewaresFolder, 0755, true, true);
 
                         //class middlewares
-                        $middwareFile = base_path('modules/'. $name .'/src/Http/Middlewares/'. $name .'Middleware.php');
+                        $middwareFile = base_path('modules/' . $name . '/src/Http/Middlewares/' . $name . 'Middleware.php');
                         if (!File::exists($middwareFile)) {
                             $moduleMiddwareFile = app_path('Console/Commands/Templates/ModuleMiddleware.txt');
-                            $moduleMiddwareContent= "";
+                            $moduleMiddwareContent = "";
                             if (File::exists($moduleMiddwareFile)) {
                                 $moduleMiddwareContent = file_get_contents($moduleMiddwareFile);
                                 $moduleMiddwareContent = str_replace('{module}', $name, $moduleMiddwareContent);
                             }
-                            File::put($middwareFile,$moduleMiddwareContent);
+                            File::put($middwareFile, $moduleMiddwareContent);
                         }
                     }
 
@@ -246,16 +257,16 @@ class Module extends Command
                         File::makeDirectory($requestsFolder, 0755, true, true);
 
                         //class request
-                        $requestFile = base_path('modules/'. $name .'/src/Http/Requests/'. $name .'Request.php');
+                        $requestFile = base_path('modules/' . $name . '/src/Http/Requests/' . $name . 'Request.php');
                         if (!File::exists($requestFile)) {
                             $moduleRequestFile = app_path('Console/Commands/Templates/ModuleRequest.txt');
-                            $moduleRequestContent= "";
+                            $moduleRequestContent = "";
                             if (File::exists($moduleRequestFile)) {
                                 $moduleRequestContent = file_get_contents($moduleRequestFile);
                                 $moduleRequestContent = str_replace('{module}', $name, $moduleRequestContent);
                                 $moduleRequestContent = str_replace('{name}', strtolower($name), $moduleRequestContent);
                             }
-                            File::put($requestFile,$moduleRequestContent);
+                            File::put($requestFile, $moduleRequestContent);
                         }
                     }
                 }
@@ -271,7 +282,7 @@ class Module extends Command
                         if (File::exists($moduleModelFile)) {
                             $moduleModelContent = file_get_contents($moduleModelFile);
                             $moduleModelContent = str_replace('{module}', $name, $moduleModelContent);
-                            $moduleModelContent = str_replace('{table}',strtolower(ConvertNoun($name,true)), $moduleModelContent);
+                            $moduleModelContent = str_replace('{table}', strtolower(ConvertNoun($name, true)), $moduleModelContent);
                         }
                         File::put($modelFile, $moduleModelContent);
                     }
@@ -283,30 +294,30 @@ class Module extends Command
                     File::makeDirectory($repositoriesFolder, 0755, true, true);
 
                     //create file name-repositoryInterface
-                    $repositoriesInterface = base_path('modules/' . $name . '/src/Repositories/'.$name.'RepositoryInterface.php');
+                    $repositoriesInterface = base_path('modules/' . $name . '/src/Repositories/' . $name . 'RepositoryInterface.php');
 
                     //class module repository interface
-                    if(!File::exists($repositoriesInterface)){
+                    if (!File::exists($repositoriesInterface)) {
                         $moduleRepoInterfaceFile = app_path('/Console/Commands/Templates/ModuleRepositoryInterface.txt');
                         $moduleRepoInterfaceContent = "";
                         if (File::exists($moduleRepoInterfaceFile)) {
                             $moduleRepoInterfaceContent = file_get_contents($moduleRepoInterfaceFile);
                             $moduleRepoInterfaceContent = str_replace('{module}', $name, $moduleRepoInterfaceContent);
                         }
-                        File::put($repositoriesInterface,$moduleRepoInterfaceContent);
+                        File::put($repositoriesInterface, $moduleRepoInterfaceContent);
                     }
 
                     //create file name-repository
-                    $repositoriesInterface = base_path('modules/' . $name . '/src/Repositories/'.$name.'Repository.php');
+                    $repositoriesInterface = base_path('modules/' . $name . '/src/Repositories/' . $name . 'Repository.php');
 
-                    if(!File::exists($repositoriesInterface)){
+                    if (!File::exists($repositoriesInterface)) {
                         $moduleRepoFile = app_path('/Console/Commands/Templates/ModuleRepository.txt');
                         $moduleRepoContent = "";
                         if (File::exists($moduleRepoFile)) {
                             $moduleRepoContent = file_get_contents($moduleRepoFile);
                             $moduleRepoContent = str_replace('{module}', $name, $moduleRepoContent);
                         }
-                        File::put($repositoriesInterface,$moduleRepoContent);
+                        File::put($repositoriesInterface, $moduleRepoContent);
                     }
                 }
             }

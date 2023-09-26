@@ -23,7 +23,11 @@ class CourseRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $id = $this->route()->course;
+
+        $unique = 'unique:courses,code,' . $id;
+
+        $rules = [
             'name' => 'required|max:255',
             'slug' => 'required|max:255',
             'detail' => 'required',
@@ -32,13 +36,15 @@ class CourseRequest extends FormRequest
                     $fail(__('course::validation.select'));
                 }
             }],
-            'code' => 'required|max:255',
+            'code' => 'required|max:255|' . $unique,
             'is_document' => 'required|integer',
             'status' => 'required|integer',
             'supports' => 'required',
             'thumbnail' => 'required|max:255',
             'categories' => 'required',
         ];
+
+        return $rules;
     }
 
     public function messages()

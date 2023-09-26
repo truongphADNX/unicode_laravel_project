@@ -19,33 +19,40 @@ class {module}Controller extends Controller{
         $this->{name}Repository = ${name}Repository;
     }
 
-    public function index() {
-
-        $pageTitle = '';
+    public function index()
+    {
+        $pageTitle = 'Quan ly ';
 
         return view('{name}::list_{names}',compact('pageTitle'));
     }
 
-    public function data() {
+    public function data()
+    {
         return;
     }
 
-    public function create() {
+    public function create()
+    {
         return;
     }
 
-    public function store({module}Request ${name}Request){
+    public function store({module}Request ${name}Request)
+    {
         return;
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         return;
     }
 
-    public function update({module}Request ${name}Request, $id){
+    public function update({module}Request ${name}Request, $id)
+    {
         return;
     }
-    public function delete($id){
+
+    public function delete($id)
+    {
         return;
     }
 }
