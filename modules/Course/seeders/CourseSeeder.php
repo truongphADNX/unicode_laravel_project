@@ -22,7 +22,7 @@ class CourseSeeder extends Seeder
         $limit = 20;
         for ($i = 0; $i < $limit; $i++) {
             DB::table('courses')->insert([
-            'name' => $faker->name,
+                'name' => $faker->name,
             ]);
         }
     }

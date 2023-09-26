@@ -9,11 +9,15 @@ use Modules\Teacher\src\Repositories\TeacherRepositoryInterface;
 
 class TeacherRepository extends BaseRepository implements TeacherRepositoryInterface
 {
-    public function getModel() {
+    public function getModel()
+    {
         return Teacher::class;
     }
 
-    public function getTeachers($limit=10){
-        return $this->model->limit($limit)->get();
+    public function getTeachers($limit = 10)
+    {
+        return $this->model->select([
+            'id', 'name', 'exp', 'image', 'created_at'
+        ])->latest();
     }
 }
