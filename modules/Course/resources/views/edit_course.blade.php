@@ -54,8 +54,10 @@
                     <label for="teacher_id">Select teacher</label>
                     <select name="teacher_id" id="" class="form-select @error('teacher_id') is-invalid @enderror">
                         <option value="0" selected>Select teacher</option>
-                        <option value="1" @if (old('teacher_id') == 1 || $course->teacher_id == 1) {{ 'selected' }} @endif>Tiến Bịp
-                        </option>
+                        @foreach ($teachers as $teacher)
+                            <option value="{{ $teacher->id }}" @if (old('teacher_id') == $teacher->id || $course->teacher_id == $teacher->id) selected @endif>
+                                {{ $teacher->name }}</option>
+                        @endforeach
                     </select>
                     @error('teacher_id')
                         <div class="invalid-feedback">

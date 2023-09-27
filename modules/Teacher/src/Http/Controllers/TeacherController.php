@@ -2,11 +2,12 @@
 
 namespace Modules\Teacher\src\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Modules\Teacher\src\Models\Teacher;
-use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Modules\Teacher\src\Models\Teacher;
 use Yajra\DataTables\Facades\DataTables;
 use Modules\Teacher\src\Http\Requests\TeacherRequest;
 use Modules\Teacher\src\Repositories\TeacherRepository;
@@ -22,7 +23,6 @@ class TeacherController extends Controller
 
     public function index()
     {
-
         $pageTitle = 'Quan ly giao vien';
 
         return view('teacher::list_teachers', compact('pageTitle'));
@@ -33,7 +33,7 @@ class TeacherController extends Controller
         $teachers = $this->teacherRepository->getTeachers();
         return DataTables::of($teachers)
             ->editColumn('image', function ($teacher) {
-                return $teacher->image ? '<img src="https://www.lightenyourway.com/wp-content/uploads/2014/07/smiling-dogIMG.jpg" class="teacher__img">' : '';
+                return $teacher->image ? '<img src="' . $teacher->image . '" class="teacher__img">' : '';
             })
             ->editColumn('created_at', function ($teacher) {
                 return Carbon::parse($teacher->created_at)->format('Y/m/d h:i:s');
@@ -50,25 +50,53 @@ class TeacherController extends Controller
 
     public function create()
     {
-        return;
+        $pageTitle = 'Them moi giao vien';
+
+        return view('teacher::add_teacher', compact('pageTitle'));
     }
 
     public function store(TeacherRequest $teacherRequest)
     {
-        return;
+        $data = $teacherRequest->except('_method', '_token');
+        $teacher = $this->teacherRepository->create($data);
+        if ($teacher) {
+            return redirect()->route('admin.teachers.index')->with('msg', __('teacher::messages.create.success'));
+        }
+        return back()->with('msg', __('teacher::messages.create.failure'));
     }
 
     public function edit($id)
     {
-        return;
+        $teacher = $this->teacherRepository->find($id);
+
+        $pageTitle = 'Cập nhật giao vien';
+
+        if (!$teacher) {
+            abort(404);
+        }
+        return view('teacher::edit_teacher', compact(['pageTitle', 'teacher']));
     }
 
     public function update(TeacherRequest $teacherRequest, $id)
     {
-        return;
+        $data = $teacherRequest->except('_method', '_token');
+
+        $teacher = $this->teacherRepository->update($id, $data);
+
+        if ($teacher) {
+            return redirect()->route('admin.teachers.index')->with('msg', __('teacher::messages.update.success'));
+        }
+        return back()->with('msg', __('teacher::messages.update.failure'));
     }
     public function delete($id)
     {
-        return;
+        $teacher = $this->teacherRepository->find($id);
+
+        $result = $this->teacherRepository->delete($id);
+        if ($result) {
+            $image = $teacher->image;
+            deleteFileStorage($image);
+            return back()->with('msg', __('teacher::messages.delete.success'));
+        }
     }
 }

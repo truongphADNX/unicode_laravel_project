@@ -23,12 +23,15 @@ class TeacherRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route()->teacher;
+        $unique = 'unique:teachers,slug,' . $id;
+
         return [
-            'name' => 'required"max:255',
-            'slug' => 'required|max:255',
+            'name' => 'required|max:255',
+            'slug' => 'required|max:255|' . $unique,
             'description' => 'required',
-            'exp' => 'required|integer',
-            'image' => 'required"255',
+            'exp' => 'required|numeric',
+            'image' => 'required|max:255',
         ];
     }
 
@@ -44,6 +47,10 @@ class TeacherRequest extends FormRequest
     {
         return [
             'name' => __('teacher::validation.name'),
+            'slug' => __('teacher::validation.slug'),
+            'exp' => __('teacher::validation.exp'),
+            'description' => __('teacher::validation.description'),
+            'image' => __('teacher::validation.image'),
         ];
     }
 }

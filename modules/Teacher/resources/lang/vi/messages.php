@@ -1,6 +1,5 @@
 <?php
 return [
-
     'create.success' => 'Create teacher successfully',
     'create.failure' => 'Create teacher sailed',
     'update.success' => 'Update teacher successfully',

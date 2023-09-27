@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\File;
+
 function  getCategoriesCheckbox($categories, $old = [], $parentID = 0, $char = "")
 {
     $id = request()->route()->category;

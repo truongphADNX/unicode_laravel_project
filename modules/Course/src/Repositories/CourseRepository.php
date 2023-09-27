@@ -17,7 +17,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
     public function getAllCourses($limit = 10)
     {
         return $this->model->select([
-            'id', 'name', 'status', 'price', 'sale_price', 'created_at'
+            'id', 'name', 'status', 'price', 'sale_price', 'updated_at'
         ])->latest();
     }
 

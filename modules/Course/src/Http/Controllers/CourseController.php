@@ -12,16 +12,22 @@ use Yajra\DataTables\Facades\DataTables;
 use Modules\Course\src\Http\Requests\CourseRequest;
 use Modules\Course\src\Repositories\CourseRepository;
 use Modules\Categories\src\Repositories\CategoriesRepository;
+use Modules\Teacher\src\Repositories\TeacherRepository;
 
 class CourseController extends Controller
 {
 
     protected $courseRepository;
     protected $categoriesRepository;
-    public function __construct(CourseRepository $courseRepository, CategoriesRepository $categoriesRepository)
-    {
+    protected $teachersRepository;
+    public function __construct(
+        CourseRepository $courseRepository,
+        CategoriesRepository $categoriesRepository,
+        TeacherRepository $teachersRepository
+    ) {
         $this->courseRepository = $courseRepository;
         $this->categoriesRepository =  $categoriesRepository;
+        $this->teachersRepository =  $teachersRepository;
     }
 
     public function index()
@@ -36,6 +42,9 @@ class CourseController extends Controller
     {
         $courses = $this->courseRepository->getAllCourses()->get();
         return DataTables::of($courses)
+            ->addColumn('updated_at', function ($course) {
+                return Carbon::parse($course->updated_at)->format('Y/m/d h:i:s');
+            })
             ->addColumn('update', function ($course) {
                 return '<a href="' . route('admin.courses.edit', $course) . '" class="btn btn-warning">Update</a>';
             })
@@ -69,7 +78,8 @@ class CourseController extends Controller
     {
         $pageTitle = 'Create Course';
         $categories = $this->categoriesRepository->getAllCategories();
-        return view('course::add_course', compact(['pageTitle', 'categories']));
+        $teachers = $this->teachersRepository->getTeachers()->get();
+        return view('course::add_course', compact(['pageTitle', 'categories', 'teachers']));
     }
 
     public function store(CourseRequest $courseRequest)
@@ -100,7 +110,8 @@ class CourseController extends Controller
         $course = $this->courseRepository->find($id);
         $categoryIds = $this->courseRepository->getRelatedCategories($course);
         $categories = $this->categoriesRepository->getAllCategories();
-        return view('course::edit_course', compact('pageTitle', 'course', 'categories', 'categoryIds'));
+        $teachers = $this->teachersRepository->getTeachers()->get();
+        return view('course::edit_course', compact('pageTitle', 'course', 'categories', 'categoryIds', 'teachers'));
     }
 
     public function update(CourseRequest $courseRequest, $id)
@@ -130,10 +141,13 @@ class CourseController extends Controller
         DB::beginTransaction();
         try {
             $course = $this->courseRepository->find($id);
-            $this->courseRepository->deleteCourseCategories($course);
-            $this->courseRepository->delete($id);
-            DB::commit();
-            return back()->with('msg', __('course::messages.delete.success'));
+            $result = $this->courseRepository->delete($id);
+            if ($result) {
+                $image = $course->image;
+                deleteFileStorage($image);
+                DB::commit();
+                return back()->with('msg', __('course::messages.delete.success'));
+            }
         } catch (\Throwable $th) {
             DB::rollback();
             return back()->with('msg', __('course::messages.delete.failure'));
