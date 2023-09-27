@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('stylesheets')
+@section('stylesheetsopen')
     <style>
         .teacher__img {
             width: 80px;

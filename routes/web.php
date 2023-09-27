@@ -14,10 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
     Lfm::routes();
 });
+
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
