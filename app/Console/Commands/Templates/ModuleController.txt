@@ -21,38 +21,58 @@ class {module}Controller extends Controller{
 
     public function index()
     {
-        $pageTitle = 'Quan ly ';
+        $pageTitle = 'Quan ly {module}';
 
         return view('{name}::list_{names}',compact('pageTitle'));
     }
 
     public function data()
     {
-        return;
+        ${names} = $this->{name}Repository->getAll{module}s();
+        return DataTables::of(${names})
+            ->addColumn('update', function (${name}) {
+                return '<a href="' . route('admin.{names}.edit', ${name}) . '" class="btn btn-warning">Update</a>';
+            })
+            ->addColumn('delete', function (${name}) {
+                return '<a href="' . route('admin.{names}.delete', ${name}) . '" class="btn btn-danger delete-action">Delete</a>';
+            })
+            ->editColumn('created_at', function (${name}) {
+                return Carbon::parse(${name}->created_at)->format('Y/m/d h:i:s');
+            })
+            ->rawColumns(['update', 'delete'])
+            ->toJson();
     }
 
     public function create()
     {
-        return;
+       $pageTitle = 'Them moi {name}';
+        return view('{name}::add_{name}', compact('pageTitle'));
     }
 
     public function store({module}Request ${name}Request)
     {
-        return;
+        $data = ${name}Request->except('method', '_token');
+        $this->{name}Repository->create($data);
+        return  redirect()->route('admin.{names}.index')->with('msg', __('{name}::messages.create.success'));
     }
 
     public function edit($id)
     {
-        return;
+        ${name} = $this->{name}Repository->find($id);
+        $pageTitle = 'Cập nhật {name}';
+        return view('{name}::edit_{name}', compact(['{name}', 'pageTitle']));
     }
 
     public function update({module}Request ${name}Request, $id)
     {
-        return;
+        $data = ${name}Request->except('_token', 'method');
+        $this->{name}Repository->update($id, $data);
+        return back()->with('msg', __('{name}::messages.update.success'));
     }
 
     public function delete($id)
     {
-        return;
+         $this->{name}Repository->delete($id);
+        return back()->with('msg', __('{name}::messages.delete.success'));
     }
 }

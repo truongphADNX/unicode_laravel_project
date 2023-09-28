@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
 ->name('admin.')
-->middleware('web')
-->namespace('Modules\{module}\src\Http\Controllers')
 ->group(function () {
     Route::prefix('{prefix}')->name('{name}.')->group(function () {
         Route::get('/','{module}Controller@index')->name('index');

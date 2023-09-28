@@ -28,11 +28,11 @@ class UserSeeder extends Seeder
         $limit = 20;
         for ($i = 0; $i < $limit; $i++) {
             DB::table('users')->insert([
-            'name' => $faker->name,
-            'username' => $faker->userName,
-            'email' => $faker->unique()->email,
-            'password' => Hash::make('123456'),
-            'group_id' => $faker->numberBetween(1,4)
+                'name' => $faker->name,
+                'username' => $faker->userName,
+                'email' => $faker->unique()->email,
+                'password' => Hash::make('123456'),
+                'group_id' => $faker->numberBetween(1, 4)
             ]);
         }
     }

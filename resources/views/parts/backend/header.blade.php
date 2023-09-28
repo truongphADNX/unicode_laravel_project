@@ -17,7 +17,11 @@
                 <li>
                     <hr class="dropdown-divider" />
                 </li>
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li><a class="dropdown-item" id="logout-action" href="{{ route('logout') }}">Logout</a></li>
+                <form action="" id="logout-form" method="post">
+                    @method('post')
+                    @csrf
+                </form>
             </ul>
         </li>
     </ul>

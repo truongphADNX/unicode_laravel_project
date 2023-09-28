@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Modules\Course\src\Models\Course;
 use Yajra\DataTables\Facades\DataTables;
 use Modules\Course\src\Http\Requests\CourseRequest;
-use Modules\Course\src\Repositories\CourseRepository;
-use Modules\Categories\src\Repositories\CategoriesRepository;
-use Modules\Teacher\src\Repositories\TeacherRepository;
+use Modules\Course\src\Repositories\CourseRepositoryInterface;
+use Modules\Teacher\src\Repositories\TeacherRepositoryInterface;
+use Modules\Categories\src\Repositories\CategoriesRepositoryInterface;
 
 class CourseController extends Controller
 {
@@ -21,9 +21,9 @@ class CourseController extends Controller
     protected $categoriesRepository;
     protected $teachersRepository;
     public function __construct(
-        CourseRepository $courseRepository,
-        CategoriesRepository $categoriesRepository,
-        TeacherRepository $teachersRepository
+        CourseRepositoryInterface $courseRepository,
+        CategoriesRepositoryInterface $categoriesRepository,
+        TeacherRepositoryInterface $teachersRepository
     ) {
         $this->courseRepository = $courseRepository;
         $this->categoriesRepository =  $categoriesRepository;

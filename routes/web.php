@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'laravel-filemanager'], function () {
     Lfm::routes();
 });
 

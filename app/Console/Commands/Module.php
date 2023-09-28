@@ -66,7 +66,7 @@ class Module extends Command
             $routeFolder = base_path('modules/' . $name . '/routes');
             if (!File::exists($routeFolder)) {
                 File::makeDirectory($routeFolder, 0755, true, true);
-                $routeFile = base_path('modules/' . $name . '/routes/routes.php');
+                $routeFile = base_path('modules/' . $name . '/routes/web.php');
                 if (!File::exists($routeFile)) {
                     $moduleRouteFile = app_path('Console/Commands/Templates/ModuleRoute.txt');
                     $moduleRouteContent = "";
@@ -76,7 +76,7 @@ class Module extends Command
                         $moduleRouteContent = str_replace(['{prefix}', '{name}'], strtolower(ConvertNoun($name, true)), $moduleRouteContent);
                         $moduleRouteContent = str_replace('{argument}', strtolower(ConvertNoun($name)), $moduleRouteContent);
                     }
-                    -File::put($routeFile, $moduleRouteContent);
+                    File::put($routeFile, $moduleRouteContent);
                 }
             }
 
@@ -130,13 +130,26 @@ class Module extends Command
                         //enFile messages
                         $messagesFile = base_path('modules/' . $name . '/resources/lang/en/messages.php');
                         if (!File::exists($messagesFile)) {
-                            File::put($messagesFile, "<?php\nreturn [\n];");
+                            $lowerName = strtolower($name);
+                            File::put($messagesFile, "<?php\nreturn [
+    'create.success' => 'Create $lowerName successfully',
+    'create.failure' => 'Create $lowerName sailed',
+    'update.success' => 'Update $lowerName successfully',
+    'update.failure' => 'Update $lowerName failed',
+    'delete.success' => 'Delete $lowerName successfully',
+    'delete.failure' => 'Delete $lowerName failed'
+];");
                         }
 
                         //enFile validation
                         $validationFile = base_path('modules/' . $name . '/resources/lang/en/validation.php');
                         if (!File::exists($validationFile)) {
-                            File::put($validationFile, "<?php\nreturn [\n];");
+                            File::put($validationFile, "<?php\nreturn [
+    'required' => ':attribute field is required.',
+    'attributes' => [
+        'name' => 'Name',
+    ],
+];");
                         }
                     }
 
@@ -149,22 +162,24 @@ class Module extends Command
                         $messagesFile = base_path('modules/' . $name . '/resources/lang/vi/messages.php');
                         if (!File::exists($messagesFile)) {
                             $lowerName = strtolower($name);
-                            File::put($messagesFile, "<?php\nreturn [\n
-    'create.success' => 'Create $lowerName successfully',
-    'create.failure' => 'Create $lowerName sailed',
-    'update.success' => 'Update $lowerName successfully',
-    'update.failure' => 'Update $lowerName failed',
-    'delete.success' => 'Delete $lowerName successfully',
-    'delete.failure' => 'Delete $lowerName failed'
+                            File::put($messagesFile, "<?php\nreturn [
+    'create.success' => 'Tạo mới $lowerName thành công.',
+    'create.failure' => 'Tạo mới $lowerName thất bại.',
+    'update.success' => 'Cập nhật $lowerName thành công.',
+    'update.failure' => 'Cập nhật $lowerName thất bại.',
+    'delete.success' => 'Xóa $lowerName thành công.',
+    'delete.failure' => 'Xóa $lowerName thất bại.'
 ];");
                         }
 
                         //viFile validation
                         $validationFile = base_path('modules/' . $name . '/resources/lang/vi/validation.php');
                         if (!File::exists($validationFile)) {
-                            File::put($validationFile, "<?php\nreturn [\n
-    'required' => ':attribute bắt buộc phải nhập',
-    'name' => 'Tên',
+                            File::put($validationFile, "<?php\nreturn [
+    'required' => ':attribute bắt buộc phải nhập.',
+    'attributes' => [
+        'name' => 'Tên',
+    ],
 ];");
                         }
                     }
@@ -178,21 +193,42 @@ class Module extends Command
                     File::makeDirectory($viewsFolder, 0755, true, true);
                     $listModuleFile = base_path('modules/' . $name . '/resources/views/list_' . strtolower(ConvertNoun($name, true)) . '.blade.php');
                     if (!File::exists($listModuleFile)) {
-                        File::put($listModuleFile, "");
+                        $moduleListFile = app_path('Console/Commands/Templates/ModuleViewList.txt');
+                        $moduleListViewContent = "";
+                        if (File::exists($moduleListFile)) {
+                            $moduleListViewContent = file_get_contents($moduleListFile);
+                            $moduleListViewContent = str_replace('{module}', strtolower(ConvertNoun($name, true)), $moduleListViewContent);
+                            $moduleListViewContent = str_replace('{data}', strtolower(ConvertNoun($name, false)), $moduleListViewContent);
+                        }
+                        File::put($listModuleFile, $moduleListViewContent);
                     }
 
                     //addFile
                     File::makeDirectory($viewsFolder, 0755, true, true);
                     $addModuleFile = base_path('modules/' . $name . '/resources/views/add_' . strtolower($name) . '.blade.php');
                     if (!File::exists($addModuleFile)) {
-                        File::put($addModuleFile, "");
+                        $moduleAddFile = app_path('Console/Commands/Templates/ModuleViewAdd.txt');
+                        $moduleAddViewContent = "";
+                        if (File::exists($moduleAddFile)) {
+                            $moduleAddViewContent = file_get_contents($moduleAddFile);
+                            $moduleAddViewContent = str_replace('{module}', strtolower(ConvertNoun($name, true)), $moduleAddViewContent);
+                            $moduleAddViewContent = str_replace('{data}', strtolower(ConvertNoun($name, false)), $moduleAddViewContent);
+                        }
+                        File::put($addModuleFile, $moduleAddViewContent);
                     }
 
                     //addFile
                     File::makeDirectory($viewsFolder, 0755, true, true);
                     $editModuleFile = base_path('modules/' . $name . '/resources/views/edit_' . strtolower($name) . '.blade.php');
                     if (!File::exists($editModuleFile)) {
-                        File::put($editModuleFile, "");
+                        $moduleEditFile = app_path('Console/Commands/Templates/ModuleViewEdit.txt');
+                        $moduleEditViewContent = "";
+                        if (File::exists($moduleEditFile)) {
+                            $moduleEditViewContent = file_get_contents($moduleEditFile);
+                            $moduleEditViewContent = str_replace('{module}', strtolower(ConvertNoun($name, true)), $moduleEditViewContent);
+                            $moduleEditViewContent = str_replace('{data}', strtolower(ConvertNoun($name, false)), $moduleEditViewContent);
+                        }
+                        File::put($editModuleFile, $moduleEditViewContent);
                     }
                 }
             }

@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Hash;
 use Modules\Teacher\src\Models\Teacher;
 use Yajra\DataTables\Facades\DataTables;
 use Modules\Teacher\src\Http\Requests\TeacherRequest;
-use Modules\Teacher\src\Repositories\TeacherRepository;
+use Modules\Teacher\src\Repositories\TeacherRepositoryInterface;
 
 class TeacherController extends Controller
 {
 
     protected $teacherRepository;
-    public function __construct(TeacherRepository $teacherRepository)
+    public function __construct(TeacherRepositoryInterface $teacherRepository)
     {
         $this->teacherRepository = $teacherRepository;
     }

@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->name('admin.')->middleware('web')
-    ->namespace('Modules\Course\src\Http\Controllers')->group(function () {
+Route::prefix('admin')
+    ->name('admin.')
+    ->group(function () {
         Route::prefix('courses')->name('courses.')->group(function () {
             Route::get('/', 'CourseController@index')->name('index');
             Route::get('/data', 'CourseController@data')->name('data');

@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Modules\Categories\src\Models\Category;
 use Modules\Categories\src\Http\Requests\CategoriesRequest;
-use Modules\Categories\src\Repositories\CategoriesRepository;
+use Modules\Categories\src\Repositories\CategoriesRepositoryInterface;
 
 class CategoriesController extends  Controller
 {
     protected $categoriesRepository;
 
-    public function __construct(CategoriesRepository $categoriesRepository)
+    public function __construct(CategoriesRepositoryInterface $categoriesRepository)
     {
         $this->categoriesRepository = $categoriesRepository;
     }
@@ -49,15 +49,16 @@ class CategoriesController extends  Controller
             ->rawColumns(['update', 'delete', 'link'])
             ->toArray();
 
-            $categories['data'] = $this->getCategoriesTable($categories['data']);
-           return $categories;
+        $categories['data'] = $this->getCategoriesTable($categories['data']);
+        return $categories;
     }
 
-    public function getCategoriesTable($categories, $char = "", &$result = []){
+    public function getCategoriesTable($categories, $char = "", &$result = [])
+    {
         if ($categories) {
             foreach ($categories as $key => $category) {
                 $row = $category;
-                $row['name'] = $char.$row['name'];
+                $row['name'] = $char . $row['name'];
                 $row['created_at'] = Carbon::parse($row['created_at'])->format('Y/m/d h:i:s');
                 $row['update'] = '<a href="' . route('admin.categories.edit', $row['id']) . '" class="btn btn-warning">Update</a>';
                 $row['delete'] = '<a href="' . route('admin.categories.delete', $row['id']) . '" class="btn btn-danger delete-action">Delete</a>';
@@ -69,7 +70,7 @@ class CategoriesController extends  Controller
                 unset($row['parent_id']);
                 $result[] = $row;
                 if (!empty($category['sub_categories'])) {
-                    $this->getCategoriesTable($category['sub_categories'], $char.'|--', $result);
+                    $this->getCategoriesTable($category['sub_categories'], $char . '|--', $result);
                 }
             }
         }
@@ -82,7 +83,7 @@ class CategoriesController extends  Controller
 
         $categories = $this->categoriesRepository->getAllCategories();
 
-        return view('categories::add', compact(['pageTitle','categories']));
+        return view('categories::add', compact(['pageTitle', 'categories']));
     }
 
     public function store(CategoriesRequest $categoriesRequest)
@@ -98,7 +99,7 @@ class CategoriesController extends  Controller
         $pageTitle = "edit categories";
         $category = $this->categoriesRepository->find($id);
         $categories = $this->categoriesRepository->getAllCategories();
-        return view('categories::edit', compact(['pageTitle','categories', 'category']));
+        return view('categories::edit', compact(['pageTitle', 'categories', 'category']));
     }
 
     public function update(CategoriesRequest $categoriesRequest, $id)
